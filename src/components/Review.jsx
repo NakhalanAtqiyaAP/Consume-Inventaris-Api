@@ -31,7 +31,7 @@ export default function Review() {
                     </svg>
                   ))}
                 </div>
-                <p className="mt-0.5 text-lg font-medium text-gray-900">Dudan Menolak Janda</p>
+                <p className="mt-0.5 text-lg font-medium text-gray-900">Dudan Aspullah</p>
               </div>
             </div>
             <p className="mt-4 text-gray-700">

@@ -32,6 +32,10 @@ import Inbound from "./pages/Inbound/Index";
 import CreateInbound from "./pages/Inbound/Create";
 import EditInbound from "./pages/Inbound/Edit";
 import RestoreInbound from "./pages/Inbound/Restore";
+//Service
+import Service from "./pages/Service/Index";
+import CreateService from "./pages/Service/Create";
+import EditService from "./pages/Service/Edit";
 
 export const router = createBrowserRouter([
     { path: '/', element: <App /> },
@@ -68,5 +72,10 @@ export const router = createBrowserRouter([
     {path: '/inbound/create', element: <CreateInbound/>},
     {path: '/inbound/edit/:id', element: <EditInbound/>},
     {path: '/inbound/trash', element: <RestoreInbound/>},
+
+    //Services
+    {path: '/service', element: <Service/>},
+    {path: '/service/create', element: <CreateService/>},
+    {path: '/service/edit/:id', element: <EditService/>},
 
 ])

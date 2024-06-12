@@ -40,13 +40,13 @@ export default function Profile(){
       <div className="text-center sm:text-left">
         <h1 className="text-2xl font-bold text-white sm:text-3xl">Welcome , {profile.username}</h1>
 
-        <p className="mt-1.5 text-sm text-gray-500">Let's write a new blog post! 🎉</p>
+        <p className="mt-1.5 text-sm text-gray-500">Jelajahi Website Ini Dengan Menjadi Nyata ☄</p>
       </div>
 
       
     </div>
   </div>
-</header>
+</header> 
         </Case>
     )
 }

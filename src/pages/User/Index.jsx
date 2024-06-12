@@ -125,7 +125,7 @@ export default function User() {
                                     <th scope="col" className="px-6 py-4">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody> 
                                 {filteredUsers.map((user, id) => (
                                     <tr key={user.id} className="border-b dark:border-neutral-500">
                                         <td className="whitespace-nowrap px-6 py-4 text-white">{id + 1}</td>

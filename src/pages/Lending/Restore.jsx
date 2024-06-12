@@ -5,8 +5,10 @@ import Case from "../../components/Case";
 import Swal from "sweetalert2";
 
 export default function LendingRestore() {
-    const [lending, setLending] = useState([]); 
+        const [lending, setLending] = useState([]); 
         const navigate =useNavigate()
+        const [filteredLendings, setFilteredLendings] = useState([]);
+        const [search, setSearch] = useState('');
         const[error, setError] = useState ([]);
         const token = localStorage.getItem('access_token');
 
@@ -25,6 +27,7 @@ export default function LendingRestore() {
             })
             .then(res =>{
                 setLending(res.data.data)
+                setFilteredLendings(res.data.data);
             })
             .catch(err=>{
                 setError(err.response.data);
@@ -50,6 +53,7 @@ export default function LendingRestore() {
                     instance.delete(`lending/permanent/${id}`)
                         .then(res => {
                             setLending(currenLending => currenLending.filter(lending => lending.id !== id));
+                            setFilteredLendings(currentLending => currentLending.filter(lending => lending.id !== id));
                             Swal.fire({
                                 title: "Deleted!",
                                 text: res.data.message,
@@ -127,6 +131,7 @@ export default function LendingRestore() {
                     instance.put(`lending/restore/${id}`)
                         .then(res => {
                             setLending(currenLending => currenLending.filter(lending => lending.id !== id));
+                            setFilteredLendings(currentLending => currentLending.filter(lending => lending.id !== id));
                             Swal.fire({
                                 title: "Mengembalikan!",
                                 text: res.data.message,
@@ -190,13 +195,34 @@ export default function LendingRestore() {
             });
         };
     
-        
+        const handleSearch = (event) => {
+            setSearch(event.target.value);
+            const searchQuery = event.target.value.toLowerCase();
+            //mengecek apakah mengandung seacrh query, 
+            const filtered = lending.filter(lending =>
+                  //.toLowerCase() mengubah huruf jadi huruf kecil , agar lebih flexsibel
+                // .includes(seacrhQuery) memeriksa mengandung seacrh query yang mengandung substring
+                lending.name.toLowerCase().includes(searchQuery) ||
+                lending.date_time.toLowerCase().includes(searchQuery)
+            );
+            setFilteredLendings(filtered);  //Menampilkan data-data yang di filter/seacrh
+        };
+    
     return(
         <Case>
             <div className="block m-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 min-h-screen">
                 <div className="items-center m-5 pb-10 pt-10">
                 <h5 className="mb-1 ml-5 text-3xl font-medium text-gray-900 dark:text-white text-shadow-blue">Lending</h5>
                     <div className="flex justify-end">
+                    <div className="flex justify-end mb-2 mr-4">
+                            <input
+                                type="text"
+                                placeholder="Search..."
+                                value={search}
+                                onChange={handleSearch}
+                                className="px-4 py-2 border border-gray-300 rounded-lg"
+                            />
+                        </div>
                     <button onClick={restoreAllLending} type="button" className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Restore ALL</button>
                     <button onClick={deletePermanentAllLending} type="button" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Hapus Semua</button>
                       
@@ -221,21 +247,23 @@ export default function LendingRestore() {
                         ) : ''
                     } */}
 
+                       
+
                     <div className="flex mt-4 md:mt-6">
                         <table className="min-w-full text-left text-sm font-light">
                             <thead className="border-b font-medium dark:border-neutral-500 text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" className="px-6 py-4">No</th>
                                     <th scope="col" className="px-6 py-4">Barang</th>
-                                    <th scope="col" className="px-6 py-4">Tanggal</th>
                                     <th scope="col" className="px-6 py-4">Notes</th>
+                                    <th scope="col" className="px-6 py-4">Tanggal</th>
                                     <th scope="col" className="px-6 py-4">total stuff</th>
                                     <th scope="col" className="px-6 py-4">Stuff</th>
                                     <th scope="col" className="px-6 py-4">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-    {lending.map((lending, id) => (
+    {filteredLendings.map((lending, id) => (
         <tr key={lending.id} className="border-b dark:border-neutral-500">
             <td className="whitespace-nowrap px-6 py-4 text-white">{id + 1}</td>
             <td className="whitespace-nowrap px-6 py-4 text-white">{lending.name}</td>

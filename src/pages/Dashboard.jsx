@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Case from '../components/Case';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import BarChartComponent from '../components/BarChart'; 
+import BarChartComponent from '../components/BarChart';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser} from "@fortawesome/free-solid-svg-icons"; 
 
 
 export default function Dashboard() {
@@ -93,6 +95,7 @@ export default function Dashboard() {
                 const processedData = Object.keys(groupedData).map((date) => ({
                     date,
                     total_stuff: groupedData[date].reduce((acc, entry) => acc + entry.total_stuff, 0)
+                    // total_stuff: groupedData[date].length nampilin berapa jumlah data lendings per tanggal
                 }));
     
                 console.log("Processed data:", processedData); // Debugging: Log processed data
@@ -133,10 +136,7 @@ export default function Dashboard() {
                     <div className="flex rounded-lg h-full dark:bg-gray-800 bg-teal-400 p-8 flex-col">
                         <div className="flex items-center mb-3">
                             <div className="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full dark:bg-indigo-500 bg-indigo-500 text-white flex-shrink-0">
-                                <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
-                                    strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
-                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                                </svg>
+                            <FontAwesomeIcon icon={faUser} className="w-5 h-5 text-white" />
                             </div>
                             <h2 className="text-white dark:text-white text-lg font-medium">Data User</h2>
                         </div>
